@@ -43,7 +43,7 @@ app.get('/todos/:id', (req, res) => {
     .then((todo) => {
 
       if (!todo) {
-        res.send('ID not found');
+        return res.status(404).send('ID not found');
       }
       res.send({ todo });
     })
