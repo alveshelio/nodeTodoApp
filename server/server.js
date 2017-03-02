@@ -1,6 +1,7 @@
 const { ObjectID } = require('mongodb');
 const app = require('express')();
 const bodyParser = require('body-parser');
+const _ = require('lodash');
 
 const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
@@ -74,6 +75,31 @@ app.delete('/todos/:id', (req, res) => {
     });
 });
 
+// UPDATE /todos/:id
+app.patch('/todos/:id', (req, res) => {
+  const id = req.params.id;
+  const body = _.pick(req.body, ['text', 'completed']);
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send('The ID you provided is not valid');
+  }
+
+  if (_.isBoolean(body.completed) && body.completed) {
+    body.completedAt = new Date().getTime();
+  } else {
+    body.completed = false;
+    body.completedAt = null;
+  }
+
+  Todo.findByIdAndUpdate(id, { $set: body }, { new: true })
+    .then((todo) => {
+      if (!todo) {
+        res.status(404).send('ID not found');
+      }
+      res.send({ todo });
+    })
+    .catch((err) => res.status(404).send('Unable to update Todo', JSON.stringify(err, undefined, 2)));
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
