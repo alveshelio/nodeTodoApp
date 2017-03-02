@@ -1,3 +1,5 @@
+require('./config/config');
+
 const { ObjectID } = require('mongodb');
 const app = require('express')();
 const bodyParser = require('body-parser');
@@ -6,8 +8,6 @@ const _ = require('lodash');
 const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
-
-const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
@@ -101,8 +101,8 @@ app.patch('/todos/:id', (req, res) => {
     .catch((err) => res.status(404).send());
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
 
 module.exports = { app };
