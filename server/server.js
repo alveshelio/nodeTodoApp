@@ -6,19 +6,29 @@ const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
 
 app.use(bodyParser.json());
-//
+
+// POST /todos
 app.post('/todos', (req, res) => {
   const todo = new Todo({
     text: req.body.text
   });
 
   todo.save()
-    .then((doc) => {
-      res.send(doc);
+    .then((todo) => {
+      res.send(todo);
     })
     .catch((err) => {
       res.status(400).send(err);
     });
+});
+
+// GET /todos
+app.get('/todos', (req, res) => {
+  Todo.find()
+    .then((todos) => {
+    res.send({ todos });
+    })
+    .catch((err) => res.status(400).send(err));
 });
 
 
