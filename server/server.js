@@ -98,7 +98,7 @@ app.patch('/todos/:id', (req, res) => {
       }
       res.send({ todo });
     })
-    .catch((err) => res.status(404).send('Unable to update Todo', JSON.stringify(err, undefined, 2)));
+    .catch((err) => res.status(404).send());
 });
 
 app.listen(port, () => {
