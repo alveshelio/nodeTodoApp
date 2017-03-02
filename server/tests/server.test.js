@@ -68,5 +68,28 @@ describe('GET /todos', () => {
         expect(res.body.todos.length).toBe(3);
       })
       .end(done);
-  })
+  });
 });
+
+/*
+describe('GET /todos/:id', () => {
+  it('should get one todo', (done) => {
+    const id = '58b789d89c03524280f27d6a';
+    request(app)
+      .get('/todos/:id')
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        Todo.findById(id)
+          .then((todo) => {
+            expect(todo.length).toBe(1);
+            expect(todo.text).toBe('second test todo');
+            done();
+          })
+          .catch((err) => done(err));
+      });
+  });
+});*/
