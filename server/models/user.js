@@ -62,6 +62,19 @@ UserSchema.methods.generateAuthToken = function() {
     });
 };
 
+UserSchema.methods.removeToken = function(token) {
+  const user = this;
+  return user.update({
+    // $pull is a Mongodb feature that allows you to remove items
+    // from array that match a certain criteria
+    $pull: {
+      tokens: {
+        token
+      }
+    }
+  })
+};
+
 /*
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                             Instance Methods                                *
@@ -110,7 +123,6 @@ UserSchema.statics.findByCredentials = (function(email, password) {
     .catch((err) => {
       res.status(401).send(err);
     })
-
 });
 
 /*
