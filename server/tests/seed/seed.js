@@ -10,11 +10,13 @@ const userTwoId = new ObjectID();
 const todos = [
   {
     _id: new ObjectID('58b78a9f225eb442977d72d7'),
-    text: 'first test todo'
+    text: 'first test todo',
+    _creator: userOneId
   },
   {
     _id: new ObjectID('58b78a9f225eb442977d72b8'),
-    text: 'second test todo'
+    text: 'second test todo',
+    _creator: userTwoId
   },
   {
     _id: new ObjectID('58b78a9f225eb442977d72c9'),
